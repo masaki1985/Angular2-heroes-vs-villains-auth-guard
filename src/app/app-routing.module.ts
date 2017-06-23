@@ -5,6 +5,7 @@ import { HeroComponent } from './heroes/hero/hero.component';
 import { HeroListComponent } from './heroes/hero-list/hero-list.component';
 import { VillainComponent } from './villains/villain/villain.component';
 import { VillainListComponent } from './villains/villain-list/villain-list.component';
+import { LoginComponent } from "app/login/login.component";
 
 const routes: Routes = [
   {
@@ -44,6 +45,10 @@ const routes: Routes = [
         redirectTo: 'villain-list',
       }
     ]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   }
 ];
 

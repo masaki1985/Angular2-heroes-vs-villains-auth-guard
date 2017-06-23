@@ -18,6 +18,8 @@ import { VillainComponent } from './villains/villain/villain.component';
 import { VillainsComponent } from './villains/villains.component';
 import { VillainListComponent } from './villains/villain-list/villain-list.component';
 import { VillainService } from './villains/shared/villain.service';
+import { UserProfileService } from "app/core/user-profile.service";
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { VillainService } from './villains/shared/villain.service';
     VillainsComponent,
     VillainComponent,
     VillainListComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import { VillainService } from './villains/shared/villain.service';
   providers: [
     HeroService,
     VillainService,
+    UserProfileService,
   ],
   bootstrap: [AppComponent]
 })

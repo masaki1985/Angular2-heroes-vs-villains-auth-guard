@@ -12,7 +12,9 @@ export class UserProfileService {
   private user: User;
   loginState$: BehaviorSubject<boolean>;  // ログイン状態を保持する
 
-  constructor() { }
+  constructor(
+    private http: Http,
+  ) { }
 
   /**
    * ログインする  
@@ -21,7 +23,10 @@ export class UserProfileService {
    * @param request 
    * @returns { Observable<void | ErrorObservable> }
    */
-  login(request: LoginRequest) { }
+  login(request: LoginRequest) {
+    console.log(2);
+    this.http.get(this.usersUrl).map(res => console.log(res));
+  }
 
   /**
    * ログアウトする 

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { UserProfileService, LoginRequest } from 'app/core/user-profile.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,9 +12,14 @@ export class AppComponent {
 
   title: string = 'Heroes vs. Villains';
   loginState$;  // 現在のログイン状態を保持 { Observable<boolean> } 
-
+  loginRequest: LoginRequest = {
+    email: 'test@samlple.com',
+    password: 'abcd',
+  };
+  
   constructor(
     private router: Router,
+    private UserProfileService: UserProfileService,
   ) { }
 
 
@@ -28,7 +35,9 @@ export class AppComponent {
    * ログインページに遷移する
    * @returns { void }
    */
-  gotoLogin(): void { }
+  gotoLogin(): void {
+    this.router.navigateByUrl('/login');
+  }
 
   /**
    * ログアウトする
@@ -36,4 +45,7 @@ export class AppComponent {
    */
   logout(): void { }
 
+  test(): void {
+    this.UserProfileService.login(this.loginRequest);
+  }
 }
