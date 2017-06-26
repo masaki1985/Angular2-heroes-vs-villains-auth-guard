@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserProfileService, LoginRequest } from 'app/core/user-profile.service';
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'app-root',
@@ -11,17 +12,13 @@ import { UserProfileService, LoginRequest } from 'app/core/user-profile.service'
 export class AppComponent {
 
   title: string = 'Heroes vs. Villains';
-  loginState$;  // 現在のログイン状態を保持 { Observable<boolean> } 
-  loginRequest: LoginRequest = {
-    email: 'test@samlple.com',
-    password: 'abcd',
-  };
+  loginState$: Observable<boolean> = this.UserProfileService.loginState$;  // 現在のログイン状態を保持 { Observable<boolean> } 
+  loginDisp: string;
   
   constructor(
     private router: Router,
     private UserProfileService: UserProfileService,
   ) { }
-
 
   gotoHeroes(): void {
     this.router.navigateByUrl('/heroes/hero-list');
@@ -43,9 +40,13 @@ export class AppComponent {
    * ログアウトする
    * @returns { void }
    */
-  logout(): void { }
+  logout(): void {
+    this.UserProfileService.logout();
+  }
 
+  //TODO
   test(): void {
-    this.UserProfileService.login(this.loginRequest);
+    console.log(this.UserProfileService.loginState$.getValue());
+    console.log(this.loginState$);
   }
 }
