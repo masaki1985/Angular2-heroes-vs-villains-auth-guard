@@ -13,7 +13,6 @@ export class AppComponent {
 
   title: string = 'Heroes vs. Villains';
   loginState$: Observable<boolean> = this.UserProfileService.loginState$;  // 現在のログイン状態を保持 { Observable<boolean> } 
-  //loginDisp: string = this.loginState$ ? 'Login' : 'Logout';
   
   constructor(
     private router: Router,

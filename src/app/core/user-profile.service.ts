@@ -48,7 +48,7 @@ export class UserProfileService {
       console.log("NG");
       return Observable.create(Observable.throw);
     });
-    
+
   }
 
   /**
@@ -62,7 +62,6 @@ export class UserProfileService {
   }
 
   getUsers(): Observable<User[]> {
-    //return this.http.get(this.usersUrl).map(res => res.json().data).subscribe(users =>  this.users = users);
     return this.http.get(this.usersUrl).map(res => res.json().data as User[]);
   }
   

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UserProfileService, LoginRequest } from "app/core/user-profile.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -9,17 +10,25 @@ import { UserProfileService, LoginRequest } from "app/core/user-profile.service"
 export class LoginComponent implements OnInit {
 
   //TODO
+  //テスト用アカウント　ログインOK
   loginRequest: LoginRequest = {
     email: 'hero@example.com',
     password: 'password',
   };
+  //テスト用アカウント　ログインNG
   loginRequest2: LoginRequest = {
     email: 'sample@example.com',
     password: 'password',
   };
-  
+
+  visitor: LoginRequest = {
+    email: '',
+    password: '',
+  };
+
   constructor(
     private UserProfileService: UserProfileService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -34,6 +43,7 @@ export class LoginComponent implements OnInit {
       if(this.UserProfileService.loginState$.getValue())
       {
         window.alert("ログインしました");
+        this.router.navigateByUrl('');
       }
       else
       {
