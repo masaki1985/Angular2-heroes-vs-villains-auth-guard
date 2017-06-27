@@ -14,17 +14,16 @@ export class UserProfileService {
   private usersUrl = '/api/users';
   private user: User;
   users : User[];
+  
   loginState$: BehaviorSubject<boolean>;  // ログイン状態を保持する
   
   constructor(
     private http: Http,
     private router: Router,
   ) {
-      //TODO
       this.loginState$ = new BehaviorSubject(false);
-      this.getUsers();
     }
-
+  
   /**
    * ログインする  
    * ユーザ情報をすべて取得し、その中の一つがLoginRequestの内容と一致したらloginStateをtrueにする  
@@ -33,15 +32,23 @@ export class UserProfileService {
    * @returns { Observable<void | ErrorObservable> }
    */
   login(request: LoginRequest): Observable<void | ErrorObservable> {
-    for(var i = 0; i < this.users.length; i++) {
-      if(request.email === this.users[i].email && request.password === this.users[i].password) {
+    
+    var isEqual = function(element, index: number, array: User[]) {
+      return (element.email === request.email && element.password === request.password)
+    };
+
+    return this.getUsers().map(users => {
+      this.users = users;
+      if(this.users.some(isEqual)) {
         this.loginState$.next(true);
-        //TODO Observable<void>を返す
-        return;
+        console.log("OK");
+        return null;
       }
-    }
-    //TODO Observable<ErrorObseravable>を返す
-    return;
+      this.loginState$.next(false);
+      console.log("NG");
+      return Observable.create(Observable.throw);
+    });
+    
   }
 
   /**
@@ -54,9 +61,11 @@ export class UserProfileService {
     this.router.navigateByUrl('/login');
   }
 
-  getUsers(): void {
-    this.http.get(this.usersUrl).map(res => res.json().data).subscribe(users =>  this.users = users) 
+  getUsers(): Observable<User[]> {
+    //return this.http.get(this.usersUrl).map(res => res.json().data).subscribe(users =>  this.users = users);
+    return this.http.get(this.usersUrl).map(res => res.json().data as User[]);
   }
+  
 }
 
 export interface LoginRequest {

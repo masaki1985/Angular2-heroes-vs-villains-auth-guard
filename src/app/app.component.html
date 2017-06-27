@@ -1,7 +1,9 @@
 <h1>{{title}}</h1>
-<button (click)="gotoHeroes()">View Heroes</button>
-<button (click)="gotoVillains()">View Villains</button>
-<button (click)="gotoLogin()">Login</button>
-<button (click)="logout()">Logout</button>
-<button (click)="test()">test</button>
+<div [ngSwitch]="(loginState$ | async)">
+    <button (click)="gotoHeroes()">View Heroes</button>
+    <button (click)="gotoVillains()">View Villains</button>
+    <button *ngSwitchCase="false" (click)="gotoLogin()">Login</button>
+    <button *ngSwitchCase="true" (click)="logout()">Logout</button>
+    <button (click)="test()">test</button>
+</div>
 <router-outlet></router-outlet>

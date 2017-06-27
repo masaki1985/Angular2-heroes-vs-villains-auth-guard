@@ -30,14 +30,15 @@ export class LoginComponent implements OnInit {
    * @returns { void }
    */
   login(): void {
-    this.UserProfileService.login(this.loginRequest);
-    if(this.UserProfileService.loginState$.getValue())
-    {
-      window.alert("ログインしました");
-    }
-    else
-    {
-      window.alert("ログインに失敗しました");
-    }
+    this.UserProfileService.login(this.loginRequest).subscribe(() => {
+      if(this.UserProfileService.loginState$.getValue())
+      {
+        window.alert("ログインしました");
+      }
+      else
+      {
+        window.alert("ログインに失敗しました");
+      }
+    });
   }
 }
