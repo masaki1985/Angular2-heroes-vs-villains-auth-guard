@@ -9,18 +9,6 @@ import { Router } from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
-  //TODO
-  //テスト用アカウント　ログインOK
-  loginRequest: LoginRequest = {
-    email: 'hero@example.com',
-    password: 'password',
-  };
-  //テスト用アカウント　ログインNG
-  loginRequest2: LoginRequest = {
-    email: 'sample@example.com',
-    password: 'password',
-  };
-
   visitor: LoginRequest = {
     email: '',
     password: '',
@@ -39,7 +27,10 @@ export class LoginComponent implements OnInit {
    * @returns { void }
    */
   login(): void {
-    this.UserProfileService.login(this.loginRequest).subscribe(() => {
+    if(!this.visitor.email || !this.visitor.password) {
+      return;
+    }
+    this.UserProfileService.login(this.visitor).subscribe(() => {
       if(this.UserProfileService.loginState$.getValue())
       {
         window.alert("ログインしました");

@@ -20,10 +20,20 @@ export class AppComponent {
   ) { }
 
   gotoHeroes(): void {
+    if(!this.UserProfileService.loginState$.getValue()) {
+      window.alert("ログインしてください");
+      this.gotoLogin();
+      return;
+    }
     this.router.navigateByUrl('/heroes/hero-list');
   }
 
   gotoVillains(): void {
+    if(!this.UserProfileService.loginState$.getValue()) {
+      window.alert("ログインしてください");
+      this.gotoLogin();
+      return;
+    }
     this.router.navigateByUrl('/villains/villain-list');
   }
 
@@ -44,8 +54,4 @@ export class AppComponent {
     window.alert("ログアウトしました");
   }
 
-  //TODO
-  test(): void {
-    console.log(this.UserProfileService.loginState$.getValue());
-  }
 }

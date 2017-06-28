@@ -20,6 +20,7 @@ import { VillainListComponent } from './villains/villain-list/villain-list.compo
 import { VillainService } from './villains/shared/villain.service';
 import { UserProfileService } from "app/core/user-profile.service";
 import { LoginComponent } from './login/login.component';
+import { AuthGuardService } from "app/core/auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { LoginComponent } from './login/login.component';
     HeroService,
     VillainService,
     UserProfileService,
+    AuthGuardService,
   ],
   bootstrap: [AppComponent]
 })

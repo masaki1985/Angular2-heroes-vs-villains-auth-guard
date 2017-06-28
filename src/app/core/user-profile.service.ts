@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 
 import { User } from './user';
 import { ErrorObservable } from "rxjs/observable/ErrorObservable";
-
+var global;
 
 @Injectable()
 export class UserProfileService {
@@ -14,7 +14,8 @@ export class UserProfileService {
   private usersUrl = '/api/users';
   private user: User;
   users : User[];
-  
+  request : LoginRequest;
+
   loginState$: BehaviorSubject<boolean>;  // ログイン状態を保持する
   
   constructor(
@@ -33,19 +34,17 @@ export class UserProfileService {
    */
   login(request: LoginRequest): Observable<void | ErrorObservable> {
     
-    var isEqual = function(element, index: number, array: User[]) {
-      return (element.email === request.email && element.password === request.password)
-    };
+    this.request = request;
+
+    global = this;
 
     return this.getUsers().map(users => {
       this.users = users;
-      if(this.users.some(isEqual)) {
+      if(this.users.some(this.isLoginRequestMatch)) {
         this.loginState$.next(true);
-        console.log("OK");
         return null;
       }
       this.loginState$.next(false);
-      console.log("NG");
       return Observable.create(Observable.throw);
     });
 
@@ -63,6 +62,10 @@ export class UserProfileService {
 
   getUsers(): Observable<User[]> {
     return this.http.get(this.usersUrl).map(res => res.json().data as User[]);
+  }
+
+  private isLoginRequestMatch(element, index, array) {
+    return (element.email === global.request.email && element.password === global.request.password);
   }
   
 }
