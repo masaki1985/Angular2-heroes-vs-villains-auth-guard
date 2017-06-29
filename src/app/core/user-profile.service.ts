@@ -13,8 +13,6 @@ export class UserProfileService {
 
   private usersUrl = '/api/users';
   private user: User;
-  users : User[];
-  request : LoginRequest;
 
   loginState$: BehaviorSubject<boolean>;  // ログイン状態を保持する
   
@@ -34,13 +32,8 @@ export class UserProfileService {
    */
   login(request: LoginRequest): Observable<void | ErrorObservable> {
     
-    this.request = request;
-
-    global = this;
-
     return this.getUsers().map(users => {
-      this.users = users;
-      if(this.users.some(this.isLoginRequestMatch)) {
+      if(users.some(users => users.email === request.email && users.password === request.password)) {
         this.loginState$.next(true);
         return null;
       }
@@ -55,17 +48,13 @@ export class UserProfileService {
    * loginState$をfalseにし、ログイン画面に遷移する
    * @returns { void }
    */
-  logout(): void {
+  logout() {
     this.loginState$.next(false);
     this.router.navigateByUrl('/login');
   }
 
   getUsers(): Observable<User[]> {
     return this.http.get(this.usersUrl).map(res => res.json().data as User[]);
-  }
-
-  private isLoginRequestMatch(element, index, array) {
-    return (element.email === global.request.email && element.password === global.request.password);
   }
   
 }

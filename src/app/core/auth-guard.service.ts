@@ -12,7 +12,6 @@ export class AuthGuardService implements CanActivate{
     private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-      var url: string = state.url;
       return this.userProfileService.loginState$.getValue();
     }
 }

@@ -29,7 +29,6 @@ export class InMemoryDataService implements InMemoryDbService {
     let users = [
       { id: 1, email: 'hero@example.com', password: 'password' },
       { id: 2, email: 'villan@example.com', password: 'password' },
-      { id: 3, email: 'a', password: 'a' }, //テスト用
     ];
     return { heroes, villains, users };
   }
