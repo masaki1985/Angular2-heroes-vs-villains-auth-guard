@@ -1,4 +1,8 @@
 <h1>{{title}}</h1>
 <button (click)="gotoHeroes()">View Heroes</button>
 <button (click)="gotoVillains()">View Villains</button>
+<button *ngIf="!(loginState$ | async) ; else forLogout" (click)="gotoLogin()">Login</button>
+<ng-template #forLogout>
+    <button (click)="logout()">Logout</button>
+</ng-template>
 <router-outlet></router-outlet>

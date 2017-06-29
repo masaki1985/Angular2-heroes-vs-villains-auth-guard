@@ -5,6 +5,8 @@ import { HeroComponent } from './heroes/hero/hero.component';
 import { HeroListComponent } from './heroes/hero-list/hero-list.component';
 import { VillainComponent } from './villains/villain/villain.component';
 import { VillainListComponent } from './villains/villain-list/villain-list.component';
+import { LoginComponent } from "app/login/login.component";
+import { AuthGuardService } from 'app/core/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -13,6 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'heroes',
+    canActivate: [AuthGuardService],
     children: [
       {
         path: 'hero/:id',
@@ -30,6 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'villains',
+    canActivate: [AuthGuardService],
     children: [
       {
         path: 'villain/:id',
@@ -44,6 +48,10 @@ const routes: Routes = [
         redirectTo: 'villain-list',
       }
     ]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   }
 ];
 
